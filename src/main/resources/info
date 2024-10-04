@@ -1,0 +1,1 @@
+sudo docker run --name my-mysql-container -e MYSQL_ROOT_PASSWORD=B@rook -e MYSQL_DATABASE=wallet -e MYSQL_USER=barook -e MYSQL_PASSWORD=B@rook -p 3306:3306 -d mysql:latest
