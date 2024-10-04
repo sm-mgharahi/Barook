@@ -1,0 +1,38 @@
+version: '3'
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: B@rook
+      MYSQL_DATABASE: wallet
+      MYSQL_USER: barook
+      MYSQL_PASSWORD: B@rook
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  spring-app:
+    build: .
+    container_name: spring-app
+    depends_on:
+      - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/wallet
+      SPRING_DATASOURCE_USERNAME: barook
+      SPRING_DATASOURCE_PASSWORD: B@rook
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+    volumes:
+      - ./logs:/app/logs
+
+networks:
+  my-network:
+
+volumes:
+  mysql_data:
